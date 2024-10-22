@@ -4,6 +4,17 @@
     font-family: sans-serif;
     font-weight:900px;
     }
+    .control-button {
+        font-size: 2rem; /* Tugma shriftini kattalashtirish */
+        width: 80px; /* Tugma kengligi */
+        height: 80px; /* Tugma balandligi */
+        margin: 10px; /* Tugmalar orasidagi bo'shliq */
+        background-color: #4CAF50; /* Tugma rangi */
+        color: white; /* Tugma matn rangi */
+        border: none; /* Tugma chegarasi */
+        border-radius: 10px; /* Tugma burchaklarini yumshatish */
+        cursor: pointer; /* Ko'rsatkichni qo'shish */
+    }
     .game{
     background-image: url(bg.jpg);
     background-repeat: no-repeat;

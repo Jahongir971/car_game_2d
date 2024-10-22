@@ -13,9 +13,8 @@ let keys = {
     ArrowDown: false,
     ArrowLeft: false,
     ArrowRight: false,
-}
+};
 
-// Player object to hold the game state
 let player = {
     speed: 5,
     score: 0,
@@ -27,15 +26,15 @@ let player = {
 
 // Mobile controls
 function setMobileControls() {
-    document.getElementById('up').addEventListener('touchstart', () => { keys.ArrowUp = true; });
-    document.getElementById('down').addEventListener('touchstart', () => { keys.ArrowDown = true; });
-    document.getElementById('left').addEventListener('touchstart', () => { keys.ArrowLeft = true; });
-    document.getElementById('right').addEventListener('touchstart', () => { keys.ArrowRight = true; });
-    
-    document.getElementById('up').addEventListener('touchend', () => { keys.ArrowUp = false; });
-    document.getElementById('down').addEventListener('touchend', () => { keys.ArrowDown = false; });
-    document.getElementById('left').addEventListener('touchend', () => { keys.ArrowLeft = false; });
-    document.getElementById('right').addEventListener('touchend', () => { keys.ArrowRight = false; });
+    const controlButtons = document.querySelectorAll('.control-button');
+    controlButtons.forEach(button => {
+        button.addEventListener('touchstart', () => {
+            keys[button.dataset.direction] = true;
+        });
+        button.addEventListener('touchend', () => {
+            keys[button.dataset.direction] = false;
+        });
+    });
 }
 
 setMobileControls();
@@ -54,6 +53,7 @@ function Start() {
     startScreen.classList.add('hide');
     player.isStart = true;
     player.score = 0;
+    player.speed = 5; // Starting speed reset
     window.requestAnimationFrame(Play);
     
     // Creating road lines
@@ -100,10 +100,10 @@ function Play() {
         moveLines();
         moveOpponents(car);
         
-        if (keys.ArrowUp && player.y > (road.top + 70)) { player.y -= player.speed }
-        if (keys.ArrowDown && player.y < (road.height - 75)) { player.y += player.speed }
-        if (keys.ArrowRight && player.x < 350) { player.x += player.speed }
-        if (keys.ArrowLeft && player.x > 0) { player.x -= player.speed }
+        if (keys.ArrowUp && player.y > (road.top + 70)) { player.y -= player.speed * 2; }
+        if (keys.ArrowDown && player.y < (road.height - 75)) { player.y += player.speed * 2; }
+        if (keys.ArrowRight && player.x < 350) { player.x += player.speed * 2; }
+        if (keys.ArrowLeft && player.x > 0) { player.x -= player.speed * 2; }
         
         car.style.top = player.y + "px";
         car.style.left = player.x + "px";
@@ -115,7 +115,7 @@ function Play() {
             player.highScore++;
             highScore.innerHTML = "HighScore: " + player.highScore;
         }
-        score.innerHTML = "Ball: " + player.score;
+        score.innerHTML = "Score: " + player.score;
         
         window.requestAnimationFrame(Play);
     }
